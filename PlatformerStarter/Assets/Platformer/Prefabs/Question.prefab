@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7753395421801105201}
   - component: {fileID: 7702265082299694049}
   - component: {fileID: 1378273614822694934}
+  - component: {fileID: 8620194056937566844}
   m_Layer: 0
   m_Name: Question
-  m_TagString: Untagged
+  m_TagString: Question
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,3 +113,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8620194056937566844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580822080022314987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9deb3c091222fd45b1f40cc3cb70623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestionTileAnimatorMPB
+  tilesY: 5
+  secondsPerFrame: 0.12
+  playOnStart: 1

@@ -87,6 +87,16 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, 0.0f);
                     Transform questionInstance = Instantiate(questionBoxPrefab, levelRoot).transform;
                     questionInstance.position = newPostition;
+                    
+                    // Add animator component (if not already on the prefab)
+                    var anim = questionInstance.GetComponent<QuestionTileAnimatorMPB>();
+                    if (anim == null)
+                    {
+                        anim = questionInstance.gameObject.AddComponent<QuestionTileAnimatorMPB>();
+                    }
+
+                    anim.tilesY = 5;                 // 1/5 Y tiling
+                    // anim.secondsPerFrame = 0.12f; // optional
                 }
                 // Brick
                 if (currentChar == 'b')
