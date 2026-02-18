@@ -32,12 +32,12 @@ public class GameManager : MonoBehaviour
     public void AddScore(int amount)
     {
         score += amount;
-        scoreText.text = $"Mario\n{score}";
+        scoreText.text = $"Mario\n{score.ToString("D5")}";
     }
 
     public void AddCoin(int amount)
     {
         coins += amount;
-        coinsText.text = $"Ox{coins}";
+        coinsText.text = $"Ox{coins.ToString("D2")}";
     }
 }

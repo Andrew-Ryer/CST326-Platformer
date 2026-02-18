@@ -66,7 +66,7 @@ public class ClickRaycast : MonoBehaviour
                 if (gameManager != null)
                 {
                     gameManager.AddCoin(1);
-                    gameManager.AddScore(questionScore); // optional
+                    gameManager.AddScore(questionScore);
                 }
             }
         }
