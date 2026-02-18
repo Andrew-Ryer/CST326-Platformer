@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Initialize UI immediately so it shows values at start
-        scoreText.text = $"Mario\n{score}";
-        coinsText.text = $"Ox{coins}";
+        scoreText.text = $"Mario\n{score.ToString("D5")}";
+        coinsText.text = $"Ox{coins.ToString("D2")}";
         timeText.text = $"TIME\n{timeLeft.ToString("#")}";
     }
 
