@@ -3,13 +3,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    LevelParser _level;
+    
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinsText;
     public TextMeshProUGUI timeText;
 
     private int score = 0;
     private int coins = 0;
-    private float timeLeft = 360f;
+    private float timeLeft = 100f;
+    
+    void Awake()
+    {
+        _level = FindFirstObjectByType<LevelParser>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,7 +31,14 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         timeLeft -= Time.deltaTime;
-        if (timeLeft < 0) timeLeft = 0;
+        if (timeLeft < 0)
+        {
+            timeLeft = 0;
+            timeText.text = $"TIME\n{timeLeft.ToString("#")}";
+            Debug.Log("YOU FAILED!");
+            OnPlayerDied();
+            return;
+        }
 
         timeText.text = $"TIME\n{timeLeft.ToString("#")}";
     }
@@ -39,5 +53,21 @@ public class GameManager : MonoBehaviour
     {
         coins += amount;
         coinsText.text = $"Ox{coins.ToString("D2")}";
+    }
+    
+    public void ReloadLevel()
+    { 
+        _level.ReloadLevel();
+    }
+    
+    public void OnPlayerDied()
+    {
+        ReloadLevel();
+    }
+
+    public void OnPlayerReachedGoal()
+    {
+        Debug.Log("YOU WIN!");
+        ReloadLevel();
     }
 }

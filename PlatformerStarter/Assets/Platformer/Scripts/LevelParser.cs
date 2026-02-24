@@ -39,6 +39,9 @@ public class LevelParser : MonoBehaviour
     public GameObject brickPrefab;
     public GameObject questionBoxPrefab;
     public GameObject stonePrefab;
+    public GameObject waterPrefab;
+    public GameObject goalPrefab;
+    public GameObject coinPrefab;
 
     void Start()
     {
@@ -77,14 +80,14 @@ public class LevelParser : MonoBehaviour
                 // Dirt
                 if (currentChar == 'x')
                 {
-                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, 0.0f);
+                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, -0.5f);
                     Transform dirtInstance = Instantiate(dirtPrefab, levelRoot).transform;
                     dirtInstance.position = newPostition;
                 }
                 // Question Block
                 if (currentChar == '?')
                 {
-                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, 0.0f);
+                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, -0.5f);
                     Transform questionInstance = Instantiate(questionBoxPrefab, levelRoot).transform;
                     questionInstance.position = newPostition;
                     
@@ -96,21 +99,43 @@ public class LevelParser : MonoBehaviour
                     }
 
                     anim.tilesY = 5;                 // 1/5 Y tiling
-                    // anim.secondsPerFrame = 0.12f; // optional
                 }
                 // Brick
                 if (currentChar == 'b')
                 {
-                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, 0.0f);
+                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, -0.5f);
                     Transform brickInstance = Instantiate(brickPrefab, levelRoot).transform;
                     brickInstance.position = newPostition;
                 }
                 // Stone
                 if (currentChar == 's')
                 {
-                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, 0.0f);
+                    Vector3 newPostition = new Vector3(columnIndex+0.5f, row+0.5f, -0.5f);
                     Transform StoneInstance = Instantiate(stonePrefab, levelRoot).transform;
                     StoneInstance.position = newPostition;
+                }
+                
+                // Water (hazard)
+                if (currentChar == 'w')
+                {
+                    Vector3 newPostition = new Vector3(columnIndex + 0.5f, row + 0.5f, -0.5f);
+                    Transform waterInstance = Instantiate(waterPrefab, levelRoot).transform;
+                    waterInstance.position = newPostition;
+                }
+                
+                // Goal (finish)
+                if (currentChar == 'g')
+                {
+                    Vector3 newPostition = new Vector3(columnIndex + 0.5f, row + 0.5f, -0.5f);
+                    Transform goalInstance = Instantiate(goalPrefab, levelRoot).transform;
+                    goalInstance.position = newPostition;
+                }
+                // Coins
+                if (currentChar == 'c')
+                {
+                    Vector3 newPostition = new Vector3(columnIndex + 0.5f, row + 0.5f, -0.5f);
+                    Transform goalInstance = Instantiate(coinPrefab, levelRoot).transform;
+                    goalInstance.position = newPostition;
                 }
             }
 
@@ -119,12 +144,33 @@ public class LevelParser : MonoBehaviour
     }
 
     // --------------------------------------------------------------------------
-    void ReloadLevel()
+    public void ReloadLevel()
     {
         foreach (Transform child in levelRoot)
            Destroy(child.gameObject);
         
         LoadLevel();
+        
+        // Reset player position (CharacterController safe teleport)
+        GameObject playerRoot = GameObject.FindGameObjectWithTag("Player");
+        if (playerRoot == null)
+        {
+            Debug.LogWarning("ReloadLevel: Player not found (tag Player).");
+            return;
+        }
+
+        CharacterController cc = playerRoot.GetComponentInChildren<CharacterController>();
+        Transform t = (cc != null) ? cc.transform : playerRoot.transform;
+
+        if (cc != null)
+        {
+            cc.enabled = false;
+        }
+        t.position = new Vector3(13f, 3f, -0.5f);
+        if (cc != null)
+        {
+            cc.enabled = true;
+        }
     }
 }
 

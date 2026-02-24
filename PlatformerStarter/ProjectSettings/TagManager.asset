@@ -8,6 +8,8 @@ TagManager:
   - Dirt
   - Question
   - Stone
+  - Goal
+  - Coin
   layers:
   - Default
   - TransparentFX

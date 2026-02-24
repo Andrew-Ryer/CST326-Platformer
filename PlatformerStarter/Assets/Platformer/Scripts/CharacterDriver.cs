@@ -10,18 +10,25 @@ public class CharacterDriver : MonoBehaviour
     public float apexHeight = 4.5f;
     public float apexTime = 0.5f;
     
+    public ClickRaycast clickRaycast;
+    public float headCheckDistance = 0.25f;
+    
     Vector2 _velocity;
     CharacterController _controller;
+    Animator _animator;
     Quaternion facingRight;
     Quaternion facingLeft;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        facingRight = Quaternion.identity;
-        facingLeft = Quaternion.Euler(0f, 180f, 0f);
+        facingRight = Quaternion.Euler(0f, 90f, 0f);
+        facingLeft = Quaternion.Euler(0f, 270f, 0f);
         
+        _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
+        
+        clickRaycast = FindFirstObjectByType<ClickRaycast>();
     }
 
     // Update is called once per frame
@@ -86,6 +93,12 @@ public class CharacterDriver : MonoBehaviour
         Vector3 deltaPosition = new (deltaX, deltaY, 0f);
         CollisionFlags collisions = _controller.Move(deltaPosition);
         
+        //Break Bricks
+        if ((collisions & CollisionFlags.CollidedAbove) != 0 && _velocity.y > 0f)
+        {
+            TryBreakBrickAboveHead();
+        }
+        
         if ((collisions & CollisionFlags.CollidedAbove) != 0)
         {
             _velocity.y = 0f;
@@ -97,5 +110,20 @@ public class CharacterDriver : MonoBehaviour
         }
         
         //Debug.Log($"Grounded: {_controller.isGrounded}");
+        
+        _animator.SetFloat("Speed", Mathf.Abs(_velocity.x));
+        _animator.SetBool("Grounded", _controller.isGrounded);
+    }
+    
+    void TryBreakBrickAboveHead()
+    {
+        Vector3 top = transform.position + _controller.center + Vector3.up * (_controller.height * 0.5f - _controller.radius);
+
+        float radius = _controller.radius * 0.9f;
+
+        if (Physics.SphereCast(top, radius, Vector3.up, out RaycastHit hitInfo, headCheckDistance, ~0, QueryTriggerInteraction.Ignore))
+        {
+            clickRaycast.DestroyBrick(hitInfo.collider.gameObject);
+        }
     }
 }

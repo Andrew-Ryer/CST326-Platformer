@@ -8,9 +8,9 @@ public class ClickRaycast : MonoBehaviour
 
     public GameManager gameManager;
 
-    public int brickScore = 50;
-    public int questionScore = 200;
-    public int coinScore = 200;
+    public int brickScore = 100;
+    public int questionScore = 100;
+    public int coinScore = 100;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,6 +18,21 @@ public class ClickRaycast : MonoBehaviour
         if (rayCamera == null)
         {
             rayCamera = Camera.main;
+        }
+    }
+    
+    public void DestroyBrick(GameObject hitObj)
+    {
+        if (hitObj.CompareTag("Brick"))
+        { 
+            gameManager.AddScore(brickScore);
+            Destroy(hitObj);
+        }
+        
+        if (hitObj.CompareTag("Question"))
+        { 
+            gameManager.AddScore(questionScore);
+            gameManager.AddCoin(1);
         }
     }
 

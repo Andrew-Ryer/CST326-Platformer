@@ -3,7 +3,47 @@ guid: ebf4921077f99934f863ce36767b097b
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_0
+    second: {fileID: 2100000, guid: a29a40bd7789fb84bb3e16767fef2e84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_1
+    second: {fileID: 2100000, guid: 0398975bbfc397245b882e58d9fc0122, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_2
+    second: {fileID: 2100000, guid: 466d2a19e71c1fc4d9d0bd8a3e7d8c64, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_3
+    second: {fileID: 2100000, guid: 91ff315958c57374da60863ad0568f68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_4
+    second: {fileID: 2100000, guid: a045e10a7ff24584ab0135ac99cc92ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_5
+    second: {fileID: 2100000, guid: 09185c367dd08df43a80bae96741410b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_6
+    second: {fileID: 2100000, guid: 02c7a742280d8a444be764facee5d3dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: submesh_7
+    second: {fileID: 2100000, guid: 283b77f9f0cdfb94b9ca26122a452c0d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -22,7 +62,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -98,9 +138,9 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
