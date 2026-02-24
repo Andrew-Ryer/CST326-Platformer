@@ -65,6 +65,7 @@ public class ClickRaycast : MonoBehaviour
             // Use the collider's GameObject (or root if collider is on a child)
             GameObject hitObj = hitInfo.collider.gameObject;
 
+            // PT2
             // If the collider is on a child but the tag is on the parent prefab:
             if (!hitObj.CompareTag("Brick") && !hitObj.CompareTag("Question"))
                 hitObj = hitObj.transform.root.gameObject;

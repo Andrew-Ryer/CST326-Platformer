@@ -10,6 +10,18 @@ public class CharacterDriver : MonoBehaviour
     public float apexHeight = 4.5f;
     public float apexTime = 0.5f;
     
+    // PT2: run / air control / stop tuning
+    public float groundDeceleration = 25f;
+    public float airAcceleration = 10f;
+    public float airMaxSpeed = 8f;
+    public float airDeceleration = 2f;
+
+    // PT2: variable jump height (jump cut) + separate X/Y clamp
+    [Range(0.1f, 1f)]
+    public float jumpCutMultiplier = 0.5f;
+    public float maxRiseSpeed = 18f;
+    public float maxFallSpeed = 25f;
+    
     public ClickRaycast clickRaycast;
     public float headCheckDistance = 0.25f;
     
@@ -49,7 +61,13 @@ public class CharacterDriver : MonoBehaviour
         
         bool jumpPressedThisFrame = Keyboard.current.spaceKey.wasPressedThisFrame;
         bool jumpHeld = Keyboard.current.spaceKey.isPressed;
+        
+        // PT2: run key and chosen max horizontal speed
+        bool runHeld = Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed;
+        float maxSpeedX = runHeld ? runSpeed : walkSpeed;
 
+        // Stuff from class
+        // basic ground move
         if (_controller.isGrounded)
         {
             if (direction != 0)
@@ -59,6 +77,7 @@ public class CharacterDriver : MonoBehaviour
                     _velocity.x = 0f; 
                 }
                 _velocity.x += direction * groundAcceleration * Time.deltaTime;
+                //_velocity.x = Mathf.Clamp(_velocity.x, -walkSpeed, walkSpeed);
                 _velocity.x = Mathf.Clamp(_velocity.x, -walkSpeed, walkSpeed);
 
                 transform.rotation = (direction > 0f) ? facingRight : facingLeft;
@@ -70,6 +89,7 @@ public class CharacterDriver : MonoBehaviour
                 _velocity.x = Mathf.MoveTowards(_velocity.x, 0f, groundAcceleration * Time.deltaTime);
             }
 
+            // jump
             if (jumpPressedThisFrame)
             {
                 _velocity.y = 2f * apexHeight / apexTime;
@@ -77,14 +97,37 @@ public class CharacterDriver : MonoBehaviour
         }
         else
         {
+            // long jump
             if (!jumpHeld)
             {
                 gravityModifer = 2f;
             }
         }
+        
+        // PT2: change direction in mid-air
+        if (direction != 0f)
+        {
+            // accelerate horizontally while airborne
+            _velocity.x = Mathf.MoveTowards(_velocity.x, direction * airMaxSpeed, airAcceleration * Time.deltaTime);
+            transform.rotation = (direction > 0f) ? facingRight : facingLeft;
+        }
+        else
+        {
+            // different air move decelerations
+            //_velocity.x = Mathf.MoveTowards(_velocity.x, 0f, airDeceleration * Time.deltaTime);
+            _velocity.x = Mathf.MoveTowards(_velocity.x, 0f, groundDeceleration * Time.deltaTime);
+        }
 
         float gravity = 2f * apexHeight / (apexTime * apexTime);
         _velocity.y -= gravity * gravityModifer * Time.deltaTime;
+        
+        // PT2: different variable jump height that I can change while playing
+        if (!jumpHeld && _velocity.y > 0f)
+        {
+            _velocity.y *= jumpCutMultiplier;
+        }
+        // PT2: separate y clamp
+        _velocity.y = Mathf.Clamp(_velocity.y, -maxFallSpeed, maxRiseSpeed);
         
         float deltaY = _velocity.y * Time.deltaTime;
         float deltaX = _velocity.x * Time.deltaTime;
@@ -93,7 +136,7 @@ public class CharacterDriver : MonoBehaviour
         Vector3 deltaPosition = new (deltaX, deltaY, 0f);
         CollisionFlags collisions = _controller.Move(deltaPosition);
         
-        //Break Bricks
+        //PT2: Break Bricks
         if ((collisions & CollisionFlags.CollidedAbove) != 0 && _velocity.y > 0f)
         {
             TryBreakBrickAboveHead();
@@ -115,6 +158,7 @@ public class CharacterDriver : MonoBehaviour
         _animator.SetBool("Grounded", _controller.isGrounded);
     }
     
+    //PT2: break bricks
     void TryBreakBrickAboveHead()
     {
         Vector3 top = transform.position + _controller.center + Vector3.up * (_controller.height * 0.5f - _controller.radius);

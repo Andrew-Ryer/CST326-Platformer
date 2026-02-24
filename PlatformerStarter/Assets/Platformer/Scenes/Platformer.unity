@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Time\n360
+  m_text: Time\n100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: de7045e6b40166c49bdfabb0ff417e1e, type: 2}
   m_sharedMaterial: {fileID: 2198712158756957409, guid: de7045e6b40166c49bdfabb0ff417e1e, type: 2}
@@ -658,6 +658,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraScroll
   scrollSpeed: 6
+  allowManualScroll: 1
+  followPlayer: 1
+  playerTag: Player
+  followOffset: {x: 0, y: 0, z: -10}
+  followSmooth: 8
+  followX: 1
+  followY: 0
   useBounds: 1
   minX: 13.4
   maxX: 211.5
@@ -1168,11 +1175,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27e8986cc638654a93bdf80a873dfb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDriver
-  walkSpeed: 5
-  runSpeed: 10
+  walkSpeed: 10
+  runSpeed: 15
   groundAcceleration: 15
   apexHeight: 4.5
   apexTime: 0.5
+  groundDeceleration: 25
+  airAcceleration: 10
+  airMaxSpeed: 8
+  airDeceleration: 2
+  jumpCutMultiplier: 0.5
+  maxRiseSpeed: 18
+  maxFallSpeed: 25
   clickRaycast: {fileID: 0}
   headCheckDistance: 0.25
 --- !u!143 &1635117251

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Hazard : MonoBehaviour
 {
+    //PT2
     private LevelParser _level;
 
     void Start()

@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //PT2
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0)
         {
@@ -55,16 +56,19 @@ public class GameManager : MonoBehaviour
         coinsText.text = $"Ox{coins.ToString("D2")}";
     }
     
+    //PT2
     public void ReloadLevel()
     { 
         _level.ReloadLevel();
     }
     
+    //PT2
     public void OnPlayerDied()
     {
         ReloadLevel();
     }
 
+    //PT2
     public void OnPlayerReachedGoal()
     {
         Debug.Log("YOU WIN!");

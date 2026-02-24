@@ -114,7 +114,7 @@ public class LevelParser : MonoBehaviour
                     Transform StoneInstance = Instantiate(stonePrefab, levelRoot).transform;
                     StoneInstance.position = newPostition;
                 }
-                
+                //PT2
                 // Water (hazard)
                 if (currentChar == 'w')
                 {
@@ -122,7 +122,7 @@ public class LevelParser : MonoBehaviour
                     Transform waterInstance = Instantiate(waterPrefab, levelRoot).transform;
                     waterInstance.position = newPostition;
                 }
-                
+                //PT2
                 // Goal (finish)
                 if (currentChar == 'g')
                 {
@@ -130,6 +130,7 @@ public class LevelParser : MonoBehaviour
                     Transform goalInstance = Instantiate(goalPrefab, levelRoot).transform;
                     goalInstance.position = newPostition;
                 }
+                //PT2
                 // Coins
                 if (currentChar == 'c')
                 {
@@ -151,7 +152,8 @@ public class LevelParser : MonoBehaviour
         
         LoadLevel();
         
-        // Reset player position (CharacterController safe teleport)
+        //PT2
+        // Reset player position
         GameObject playerRoot = GameObject.FindGameObjectWithTag("Player");
         if (playerRoot == null)
         {
